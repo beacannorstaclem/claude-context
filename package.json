@@ -1,51 +1,69 @@
 {
-    "name": "claude-context",
-    "version": "0.1.13",
-    "description": "A powerful code indexing tool with multi-platform support",
-    "private": true,
-    "scripts": {
-        "build": "pnpm -r --filter='!./examples/*' build && pnpm -r --filter='./examples/*' build",
-        "build:core": "pnpm --filter @zilliz/claude-context-core build",
-        "build:vscode": "pnpm --filter semanticcodesearch compile",
-        "build:mcp": "pnpm --filter @zilliz/claude-context-mcp build",
-        "dev": "pnpm -r dev",
-        "dev:core": "pnpm --filter @zilliz/claude-context-core dev",
-        "dev:vscode": "pnpm --filter semanticcodesearch watch",
-        "dev:mcp": "pnpm --filter @zilliz/claude-context-mcp dev",
-        "clean": "pnpm -r clean",
-        "lint": "pnpm -r lint",
-        "lint:fix": "pnpm -r run lint:fix",
-        "typecheck": "pnpm -r run typecheck",
-        "release:core": "pnpm --filter @zilliz/claude-context-core... run build && pnpm --filter @zilliz/claude-context-core publish --access public --no-git-checks",
-        "release:mcp": "pnpm --filter @zilliz/claude-context-mcp... run build && pnpm --filter @zilliz/claude-context-mcp publish --access public --no-git-checks",
-        "release:vscode": "pnpm --filter @zilliz/claude-context-core build && pnpm --filter semanticcodesearch run webpack && pnpm --filter semanticcodesearch release",
-        "example:basic": "pnpm --filter claude-context-basic-example start",
-        "benchmark": "node scripts/build-benchmark.js"
-    },
-    "devDependencies": {
-        "@types/node": "^20.0.0",
-        "@typescript-eslint/eslint-plugin": "^8.31.1",
-        "@typescript-eslint/parser": "^8.31.1",
-        "assert": "^2.1.0",
-        "browserify-zlib": "^0.2.0",
-        "eslint": "^9.25.1",
-        "https-browserify": "^1.0.0",
-        "os-browserify": "^0.3.0",
-        "rimraf": "^6.0.1",
-        "stream-http": "^3.2.0",
-        "tree-sitter-cli": "^0.25.6",
-        "typescript": "^5.8.3",
-        "url": "^0.11.4",
-        "vm-browserify": "^1.1.2"
-    },
-    "engines": {
-        "node": ">=20.0.0",
-        "pnpm": ">=10.0.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/zilliztech/claude-context.git"
-    },
-    "license": "MIT",
-    "author": "Cheney Zhang <277584121@qq.com>"
+  "name": "claude-context",
+  "version": "0.1.0",
+  "description": "A tool to manage and inject context into Claude AI conversations using vector search",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "claude-context": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/cli.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts src/cli.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "anthropic",
+    "context",
+    "vector-search",
+    "milvus",
+    "zilliz",
+    "ai",
+    "llm",
+    "rag"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zilliztech/claude-context.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zilliztech/claude-context/issues"
+  },
+  "homepage": "https://github.com/zilliztech/claude-context#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.0",
+    "@zilliz/milvus2-sdk-node": "^2.4.0",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.0",
+    "glob": "^10.4.0",
+    "tiktoken": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "eslint": "^8.57.0",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
 }
